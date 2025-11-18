@@ -1,10 +1,6 @@
 import type { NextConfig } from "next";
 
-const nextConfig = {
-  eslint: {
-    // Disable ESLint during production builds
-    ignoreDuringBuilds: true,
-  },
+const nextConfig: NextConfig = {
   typescript: {
     // Optional: Disable TypeScript type checking during builds (if needed)
     // ignoreBuildErrors: true,
@@ -23,6 +19,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '*.yourdomain.com', // Replace with your production domain
+      },
+      {
+        protocol: 'https',
+        hostname: 'ubiqent.com',
       },
     ],
   },
