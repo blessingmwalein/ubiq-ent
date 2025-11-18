@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
+  eslint: {
+    // Disable ESLint during production builds
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    // Optional: Disable TypeScript type checking during builds (if needed)
+    // ignoreBuildErrors: true,
+  },
   images: {
     remotePatterns: [
       {

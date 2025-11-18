@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState, useRef, Suspense } from 'react'
+import { useRouter } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { searchContent, toggleFavorite } from '@/store/slices/contentSlice'
 import { MainLayout, Container } from '@/components/layout'
@@ -18,10 +18,9 @@ interface DynamicContentPageProps {
     contentType: 'movie' | 'show' | 'skit' | 'afrimation' | 'real_estate'
 }
 
-export default function DynamicContentPage({ contentType }: DynamicContentPageProps) {
+function DynamicContentPageContent({ contentType }: DynamicContentPageProps) {
     const router = useRouter()
     const dispatch = useAppDispatch()
-    const searchParams = useSearchParams()
     const { selectedProfile } = useAppSelector((state) => state.profiles)
     const { items, loading } = useAppSelector((state) => state.content)
     const { isMobile, isTablet } = useResponsive()
@@ -260,5 +259,14 @@ export default function DynamicContentPage({ contentType }: DynamicContentPagePr
                 )}
             </div>
         </MainLayout>
+    )
+}
+
+// Wrap in Suspense to handle any async operations
+export default function DynamicContentPage(props: DynamicContentPageProps) {
+    return (
+        <Suspense fallback={<HeroSkeleton />}>
+            <DynamicContentPageContent {...props} />
+        </Suspense>
     )
 }

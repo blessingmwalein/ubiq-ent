@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
 import { searchContent, addToWatchlist, removeFromWatchlist } from '@/store/slices/contentSlice'
@@ -20,7 +20,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 
-export default function SearchPage() {
+function SearchPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const dispatch = useAppDispatch()
@@ -310,5 +310,22 @@ export default function SearchPage() {
         )}
       </Container>
     </MainLayout>
+  )
+}
+
+// Wrap in Suspense to handle useSearchParams
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <MainLayout>
+        <Container className="py-8">
+          <div className="flex items-center justify-center min-h-[50vh]">
+            <LoadingSpinner size="lg" />
+          </div>
+        </Container>
+      </MainLayout>
+    }>
+      <SearchPageContent />
+    </Suspense>
   )
 }

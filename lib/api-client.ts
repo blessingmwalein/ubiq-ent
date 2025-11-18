@@ -9,7 +9,7 @@ export const PROFILE_KEY = 'ubiq_selected_profile'
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://your-domain.com/api',
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://ubiqent.com/backend/api',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
