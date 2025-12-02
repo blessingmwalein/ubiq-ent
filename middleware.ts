@@ -110,16 +110,16 @@ export function middleware(request: NextRequest) {
       }
       
       // Check subscription
-      if (!account || !account.package_id) {
-        console.log('➡️  Redirecting to subscribe (no package)')
-        return NextResponse.redirect(new URL('/subscribe', request.url))
-      }
+      // if (!account || !account.package_id) {
+      //   console.log('➡️  Redirecting to subscribe (no package)')
+      //   return NextResponse.redirect(new URL('/subscribe', request.url))
+      // }
       
       const inactiveStatuses = ['inactive', 'suspended', 'expired', 'cancelled']
-      if (account && inactiveStatuses.includes(account.status)) {
-        console.log('➡️  Redirecting to subscribe (inactive account)')
-        return NextResponse.redirect(new URL('/subscribe', request.url))
-      }
+      // if (account && inactiveStatuses.includes(account.status)) {
+      //   console.log('➡️  Redirecting to subscribe (inactive account)')
+      //   return NextResponse.redirect(new URL('/subscribe', request.url))
+      // }
       
       // Check profile
       if (!selectedProfile) {
@@ -163,18 +163,18 @@ export function middleware(request: NextRequest) {
     }
     
     // Check subscription (except for /profiles)
-    if (pathname.startsWith('/account')) {
-      if (!account || !account.package_id) {
-        console.log('➡️  Redirecting to subscribe (no package)')
-        return NextResponse.redirect(new URL('/subscribe', request.url))
-      }
+    // if (pathname.startsWith('/account')) {
+    //   if (!account || !account.package_id) {
+    //     console.log('➡️  Redirecting to subscribe (no package)')
+    //     return NextResponse.redirect(new URL('/subscribe', request.url))
+    //   }
       
-      const inactiveStatuses = ['inactive', 'suspended', 'expired', 'cancelled']
-      if (account && inactiveStatuses.includes(account.status)) {
-        console.log('➡️  Redirecting to subscribe (inactive account)')
-        return NextResponse.redirect(new URL('/subscribe', request.url))
-      }
-    }
+    //   const inactiveStatuses = ['inactive', 'suspended', 'expired', 'cancelled']
+    //   if (account && inactiveStatuses.includes(account.status)) {
+    //     console.log('➡️  Redirecting to subscribe (inactive account)')
+    //     return NextResponse.redirect(new URL('/subscribe', request.url))
+    //   }
+    // }
     
     console.log('✅ Allowing auth route (no profile required)')
     return NextResponse.next()
@@ -197,16 +197,16 @@ export function middleware(request: NextRequest) {
     }
 
     // Check subscription
-    if (!account || !account.package_id) {
-      console.log('➡️  Redirecting to subscribe (no package)')
-      return NextResponse.redirect(new URL('/subscribe', request.url))
-    }
+    // if (!account || !account.package_id) {
+    //   console.log('➡️  Redirecting to subscribe (no package)')
+    //   return NextResponse.redirect(new URL('/subscribe', request.url))
+    // }
 
-    const inactiveStatuses = ['inactive', 'suspended', 'expired', 'cancelled']
-    if (account && inactiveStatuses.includes(account.status)) {
-      console.log('➡️  Redirecting to subscribe (inactive account)')
-      return NextResponse.redirect(new URL('/subscribe', request.url))
-    }
+    // const inactiveStatuses = ['inactive', 'suspended', 'expired', 'cancelled']
+    // if (account && inactiveStatuses.includes(account.status)) {
+    //   console.log('➡️  Redirecting to subscribe (inactive account)')
+    //   return NextResponse.redirect(new URL('/subscribe', request.url))
+    // }
 
     // Check profile selection
     if (!selectedProfile) {
