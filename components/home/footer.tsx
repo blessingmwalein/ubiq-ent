@@ -13,21 +13,15 @@ export function Footer() {
           </Link>
 
           {/* Links */}
-          <nav className="flex flex-wrap items-center justify-center gap-6 text-sm text-blue">
-            <Link href="#" className="transition-colors hover:text-white">
-              About
+          <nav className="flex flex-wrap items-center justify-center gap-6 text-sm text-blue-200">
+            <Link href="/about" className="transition-colors hover:text-white">
+              About Us
             </Link>
-            <Link href="#" className="transition-colors hover:text-white">
-              Help Center
-            </Link>
-            <Link href="#" className="transition-colors hover:text-white">
-              Terms
-            </Link>
-            <Link href="#" className="transition-colors hover:text-white">
-              Privacy
-            </Link>
-            <Link href="#" className="transition-colors hover:text-white">
+            <Link href="/contact" className="transition-colors hover:text-white">
               Contact
+            </Link>
+            <Link href="/privacy" className="transition-colors hover:text-white">
+              Privacy Policy
             </Link>
           </nav>
 

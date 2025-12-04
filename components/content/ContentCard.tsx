@@ -66,7 +66,9 @@ export default function ContentCard({
 
     return (
         <div
-            className={`group relative w-full aspect-video rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ease-in-out ${
+            className={`group relative w-full rounded-lg overflow-hidden cursor-pointer transition-all duration-300 ease-in-out ${
+                isMobile ? 'aspect-[3/4]' : 'aspect-video'
+            } ${
                 !isMobile && 'hover:scale-110 hover:z-30 hover:shadow-2xl'
             }`}
             onMouseEnter={() => !isTouch && setIsHovered(true)}
@@ -83,7 +85,7 @@ export default function ContentCard({
                     className="object-cover"
                     priority={priority}
                     fallbackText={content.title.charAt(0)}
-                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+                    sizes="(max-width: 768px) 40vw, (max-width: 1200px) 33vw, 20vw"
                 />
 
                 {/* Progress Bar */}
@@ -116,15 +118,17 @@ export default function ContentCard({
                 >
                     {/* Action Buttons - Larger touch targets on mobile */}
                     <div className="flex items-center gap-2 mb-2 md:mb-3">
-                        {/* Play Button - Prominent on mobile */}
+                        {/* Play Button - Circular icon on mobile, text button on desktop */}
                         <button
                             onClick={handlePlay}
-                            className={`flex items-center justify-center gap-1.5 px-3 md:px-4 py-2.5 md:py-2.5 bg-white hover:bg-gray-100 active:bg-gray-200 text-black rounded-md transition-colors font-semibold text-xs md:text-sm shadow-lg flex-1 ${
-                                isMobile ? 'min-h-[44px]' : ''
-                            }`}
+                            className={isMobile 
+                                ? 'flex items-center justify-center min-w-[48px] min-h-[48px] p-3 bg-white hover:bg-gray-100 active:bg-gray-200 text-black rounded-full transition-all hover:scale-105 active:scale-95 font-semibold shadow-lg'
+                                : 'flex items-center justify-center gap-1.5 px-4 py-2.5 bg-white hover:bg-gray-100 active:bg-gray-200 text-black rounded-md transition-colors font-semibold text-sm shadow-lg flex-1'
+                            }
+                            title="Play"
                         >
-                            <Play size={isMobile ? 16 : 14} fill="currentColor" className="md:w-4 md:h-4" />
-                            <span>Play</span>
+                            <Play size={isMobile ? 20 : 14} fill="currentColor" className={isMobile ? '' : 'md:w-4 md:h-4'} />
+                            {!isMobile && <span>Play</span>}
                         </button>
 
                         {/* Watchlist Button - Larger touch area on mobile */}

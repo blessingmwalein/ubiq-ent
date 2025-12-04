@@ -4,21 +4,16 @@ import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
 const footerLinks = {
   company: [
     { name: 'About Us', href: '/about' },
-    { name: 'Careers', href: '/careers' },
-    { name: 'Press', href: '/press' },
     { name: 'Contact', href: '/contact' },
-  ],
-  support: [
-    { name: 'Help Center', href: '/help' },
-    { name: 'Terms of Service', href: '/terms' },
     { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Cookie Preferences', href: '/cookies' },
+
   ],
+ 
   content: [
     { name: 'Browse All', href: '/browse' },
     { name: 'Movies', href: '/movies' },
     { name: 'TV Shows', href: '/shows' },
-    { name: 'Categories', href: '/categories' },
+    { name: 'Skits', href: '/skits' },
   ],
 }
 
@@ -72,21 +67,7 @@ export default function Footer() {
           </div>
 
           {/* Support */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Support</h3>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="text-sm text-blue-300/80 hover:text-white transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          
 
           {/* Content */}
           <div>
@@ -112,7 +93,7 @@ export default function Footer() {
               Subscribe to our newsletter for the latest updates
             </p>
             <Link
-              href="/newsletter"
+              href="/"
               className="inline-block text-sm text-blue-400 hover:text-white font-medium hover:underline transition-colors"
             >
               Subscribe →

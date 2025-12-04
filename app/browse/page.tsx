@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { MainLayout, Container } from '@/components/layout'
 import { useAppDispatch, useAppSelector } from '@/store/hooks'
@@ -8,7 +8,7 @@ import { fetchTrending, fetchNewReleases, fetchContentByType, toggleFavorite } f
 import LoadingSpinner from '@/components/ui/loading'
 import HeroSkeleton from '@/components/ui/HeroSkeleton'
 import ContentRowSkeleton from '@/components/content/ContentRowSkeleton'
-import { Play, Info, Plus } from 'lucide-react'
+import { Play, Info, Plus, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import ContentRow from '@/components/content/ContentRow'
 import ContentImage from '@/components/ui/ContentImage'
@@ -21,6 +21,14 @@ export default function BrowsePage() {
   const { selectedProfile } = useAppSelector((state) => state.profiles)
   const { trending, newReleases, movies, shows, skits, afrimations, realEstate, loading } = useAppSelector((state) => state.content)
   const { isMobile, isTablet } = useResponsive()
+  
+  // Slider state
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  // Get featured content (top 5 trending items)
+  const featuredSlides = trending?.slice(0, 5) || []
 
   useEffect(() => {
     // Fetch content
@@ -34,6 +42,37 @@ export default function BrowsePage() {
     dispatch(fetchContentByType({ type: 'afrimation', params: { per_page: 20 } }))
     dispatch(fetchContentByType({ type: 'real_estate', params: { per_page: 20 } }))
   }, [selectedProfile, dispatch, router])
+
+  // Auto-play slider
+  useEffect(() => {
+    if (!isAutoPlaying || featuredSlides.length <= 1) return
+
+    const interval = setInterval(() => {
+      setIsTransitioning(true)
+      setCurrentSlide((prev) => (prev + 1) % featuredSlides.length)
+      setTimeout(() => setIsTransitioning(false), 500)
+    }, 6000) // Change slide every 6 seconds
+
+    return () => clearInterval(interval)
+  }, [isAutoPlaying, featuredSlides.length])
+
+  const goToSlide = useCallback((index: number) => {
+    setIsTransitioning(true)
+    setCurrentSlide(index)
+    setIsAutoPlaying(false) // Pause auto-play when user manually navigates
+    setTimeout(() => setIsTransitioning(false), 500)
+    
+    // Resume auto-play after 10 seconds
+    setTimeout(() => setIsAutoPlaying(true), 10000)
+  }, [])
+
+  const nextSlide = useCallback(() => {
+    goToSlide((currentSlide + 1) % featuredSlides.length)
+  }, [currentSlide, featuredSlides.length, goToSlide])
+
+  const prevSlide = useCallback(() => {
+    goToSlide((currentSlide - 1 + featuredSlides.length) % featuredSlides.length)
+  }, [currentSlide, featuredSlides.length, goToSlide])
 
   const handleToggleFavorite = async (contentId: number) => {
     if (!selectedProfile) {
@@ -70,94 +109,148 @@ export default function BrowsePage() {
     )
   }
 
-  const featuredContent = trending?.[0]
+  const currentFeaturedContent = featuredSlides[currentSlide]
 
   return (
     <MainLayout>
-      {/* Hero Section - Responsive Heights */}
-      <section className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[85vh] -mt-14 md:-mt-16 lg:-mt-20">
-        {/* Background Image */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-transparent to-transparent z-10" />
-          {featuredContent?.backdrop_url ? (
-            <ContentImage
-              src={featuredContent.backdrop_url}
-              alt={featuredContent.title}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-blue-900 to-purple-900" />
-          )}
+      {/* Hero Slider Section - Responsive Heights */}
+      <section className="relative h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[85vh] -mt-14 md:-mt-16 lg:-mt-20 overflow-hidden">
+        {/* Slider Container */}
+        <div className="relative w-full h-full">
+          {featuredSlides.map((slide, index) => (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+            >
+              {/* Background Image */}
+              <div className="absolute inset-0">
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-transparent to-transparent z-10" />
+                {slide?.backdrop_url ? (
+                  <ContentImage
+                    src={slide.backdrop_url}
+                    alt={slide.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-blue-900 to-purple-900" />
+                )}
+              </div>
+
+              {/* Slide Content - Mobile Optimized */}
+              <Container className="relative z-20 h-full flex items-end md:items-center pb-20 md:pb-16">
+                <div className="max-w-full md:max-w-2xl space-y-3 md:space-y-6">
+                  {/* Title - Responsive Sizing */}
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white drop-shadow-2xl leading-tight">
+                    {slide?.title || 'Welcome to UBIQ Entertainment'}
+                  </h1>
+
+                  {/* Description - Hidden on very small screens */}
+                  <p className="hidden sm:block text-base md:text-lg lg:text-xl text-blue-100 drop-shadow-lg line-clamp-2 md:line-clamp-3">
+                    {slide?.description ||
+                      'Stream unlimited African movies, TV shows, and exclusive content. Watch anywhere, anytime.'}
+                  </p>
+
+                  {/* Metadata - Compact on mobile */}
+                  {slide && (
+                    <div className="flex items-center gap-2 md:gap-4 text-xs md:text-sm text-blue-200 flex-wrap">
+                      <span className="px-2 py-0.5 md:py-1 bg-blue-600 text-white font-semibold rounded">
+                        {slide.maturity_rating || 'PG-13'}
+                      </span>
+                      <span>{slide.release_year || '2024'}</span>
+                      {slide.duration_seconds && (
+                        <span className="hidden sm:inline">
+                          {Math.floor(slide.duration_seconds / 60)}m
+                        </span>
+                      )}
+                      <span className="px-2 py-0.5 md:py-1 border border-blue-400 rounded">HD</span>
+                    </div>
+                  )}
+
+                  {/* Action Buttons - Mobile Responsive */}
+                  <div className="flex items-center gap-2 md:gap-4 pt-2 md:pt-4">
+                    <Button
+                      size={isMobile ? 'default' : 'lg'}
+                      className="bg-white text-black hover:bg-white/90 shadow-xl flex-1 sm:flex-none"
+                      onClick={() => {
+                        if (slide) {
+                          router.push(`/watch/${slide.id}`)
+                        }
+                      }}
+                    >
+                      <Play className="w-4 h-4 md:w-5 md:h-5 mr-2 fill-current" />
+                      Play
+                    </Button>
+                    <Button
+                      size={isMobile ? 'default' : 'lg'}
+                      variant="secondary"
+                      className="bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm shadow-xl flex-1 sm:flex-none"
+                      onClick={() => {
+                        if (slide) {
+                          router.push(`/content/${slide.id}`)
+                        }
+                      }}
+                    >
+                      <Info className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+                      {isMobile ? 'Info' : 'More Info'}
+                    </Button>
+                    {!isMobile && (
+                      <Button
+                        size="lg"
+                        variant="ghost"
+                        className="bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm shadow-xl"
+                        onClick={() => handleToggleFavorite(slide?.id || 0)}
+                      >
+                        <Plus className="w-5 h-5 mr-2" />
+                        My List
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </Container>
+            </div>
+          ))}
         </div>
 
-        {/* Hero Content - Mobile Optimized */}
-        <Container className="relative z-20 h-full flex items-end md:items-center pb-16 md:pb-0">
-          <div className="max-w-full md:max-w-2xl space-y-3 md:space-y-6">
-            {/* Title - Responsive Sizing */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white drop-shadow-2xl leading-tight">
-              {featuredContent?.title || 'Welcome to UBIQ Entertainment'}
-            </h1>
+        {/* Navigation Arrows - Desktop only */}
+        {!isMobile && featuredSlides.length > 1 && (
+          <>
+            <button
+              onClick={prevSlide}
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 bg-black/50 hover:bg-black/80 text-white p-2 md:p-3 rounded-full backdrop-blur-sm transition-all hover:scale-110"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 bg-black/50 hover:bg-black/80 text-white p-2 md:p-3 rounded-full backdrop-blur-sm transition-all hover:scale-110"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+            </button>
+          </>
+        )}
 
-            {/* Description - Hidden on very small screens */}
-            <p className="hidden sm:block text-base md:text-lg lg:text-xl text-blue-100 drop-shadow-lg line-clamp-2 md:line-clamp-3">
-              {featuredContent?.description ||
-                'Stream unlimited African movies, TV shows, and exclusive content. Watch anywhere, anytime.'}
-            </p>
-
-            {/* Metadata - Compact on mobile */}
-            {featuredContent && (
-              <div className="flex items-center gap-2 md:gap-4 text-xs md:text-sm text-blue-200 flex-wrap">
-                <span className="px-2 py-0.5 md:py-1 bg-blue-600 text-white font-semibold rounded">
-                  PG-13
-                </span>
-                <span>{featuredContent.release_year || '2024'}</span>
-                <span className="hidden sm:inline">2h 15m</span>
-                <span className="px-2 py-0.5 md:py-1 border border-blue-400 rounded">HD</span>
-              </div>
-            )}
-
-            {/* Action Buttons - Mobile Responsive */}
-            <div className="flex items-center gap-2 md:gap-4 pt-2 md:pt-4">
-              <Button
-                size={isMobile ? 'default' : 'lg'}
-                className="bg-white text-black hover:bg-white/90 shadow-xl flex-1 sm:flex-none"
-                onClick={() => {
-                  if (featuredContent) {
-                    router.push(`/watch/${featuredContent.id}`)
-                  }
-                }}
-              >
-                <Play className="w-4 h-4 md:w-5 md:h-5 mr-2 fill-current" />
-                Play
-              </Button>
-              <Button
-                size={isMobile ? 'default' : 'lg'}
-                variant="secondary"
-                className="bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm shadow-xl flex-1 sm:flex-none"
-                onClick={() => {
-                  if (featuredContent) {
-                    router.push(`/content/${featuredContent.id}`)
-                  }
-                }}
-              >
-                <Info className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                {isMobile ? 'Info' : 'More Info'}
-              </Button>
-              {!isMobile && (
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  className="bg-white/10 text-white hover:bg-white/20 backdrop-blur-sm shadow-xl"
-                  onClick={() => handleToggleFavorite(featuredContent?.id || 0)}
-                >
-                  <Plus className="w-5 h-5 mr-2" />
-                  My List
-                </Button>
-              )}
-            </div>
+        {/* Slide Indicators - Bottom Right */}
+        {featuredSlides.length > 1 && (
+          <div className="absolute bottom-4 md:bottom-6 right-4 md:right-6 z-30 flex items-center gap-1.5 md:gap-2">
+            {featuredSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToSlide(index)}
+                className={`transition-all ${
+                  index === currentSlide
+                    ? 'w-6 md:w-10 h-1 md:h-1.5 bg-white shadow-lg'
+                    : 'w-4 md:w-6 h-1 md:h-1.5 bg-white/40 hover:bg-white/60'
+                } rounded-full`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
           </div>
-        </Container>
+        )}
       </section>
 
       {/* Content Sections - Mobile Spacing */}

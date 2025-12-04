@@ -293,82 +293,82 @@ export default function ContentDetailPage() {
                         </div>
                         <h2 className="text-xl md:text-2xl font-bold text-white">Details</h2>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
                         {/* Release Year */}
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
-                                <Calendar className="w-6 h-6 text-amber-400" />
+                        <div className="flex items-center gap-2 md:gap-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 flex items-center justify-center flex-shrink-0">
+                                <Calendar className="w-5 h-5 md:w-6 md:h-6 text-amber-400" />
                             </div>
                             <div>
-                                <p className="text-gray-400 text-sm">Release Year</p>
-                                <p className="text-white font-semibold text-lg">{currentItem.release_year}</p>
+                                <p className="text-gray-400 text-xs md:text-sm">Release Year</p>
+                                <p className="text-white font-semibold text-sm md:text-lg">{currentItem.release_year}</p>
                             </div>
                         </div>
 
                         {/* Duration */}
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center flex-shrink-0">
-                                <Clock className="w-6 h-6 text-blue-400" />
+                        <div className="flex items-center gap-2 md:gap-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 flex items-center justify-center flex-shrink-0">
+                                <Clock className="w-5 h-5 md:w-6 md:h-6 text-blue-400" />
                             </div>
                             <div>
-                                <p className="text-gray-400 text-sm">Duration</p>
-                                <p className="text-white font-semibold text-lg">{formatDuration(currentItem.duration_seconds)}</p>
+                                <p className="text-gray-400 text-xs md:text-sm">Duration</p>
+                                <p className="text-white font-semibold text-sm md:text-lg">{formatDuration(currentItem.duration_seconds)}</p>
                             </div>
                         </div>
 
                         {/* Views */}
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
-                                <Eye className="w-6 h-6 text-purple-400" />
+                        <div className="flex items-center gap-2 md:gap-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center flex-shrink-0">
+                                <Eye className="w-5 h-5 md:w-6 md:h-6 text-purple-400" />
                             </div>
                             <div>
-                                <p className="text-gray-400 text-sm">Views</p>
-                                <p className="text-white font-semibold text-lg">{currentItem.views_count.toLocaleString()}</p>
+                                <p className="text-gray-400 text-xs md:text-sm">Views</p>
+                                <p className="text-white font-semibold text-sm md:text-lg">{currentItem.views_count.toLocaleString()}</p>
                             </div>
                         </div>
 
                         {/* Type */}
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 flex items-center justify-center flex-shrink-0">
-                                <Video className="w-6 h-6 text-green-400" />
+                        <div className="flex items-center gap-2 md:gap-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 flex items-center justify-center flex-shrink-0">
+                                <Video className="w-5 h-5 md:w-6 md:h-6 text-green-400" />
                             </div>
                             <div>
-                                <p className="text-gray-400 text-sm">Type</p>
-                                <p className="text-white font-semibold text-lg capitalize">{currentItem.type}</p>
+                                <p className="text-gray-400 text-xs md:text-sm">Type</p>
+                                <p className="text-white font-semibold text-sm md:text-lg capitalize">{currentItem.type}</p>
                             </div>
                         </div>
 
                         {/* Rating */}
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-rose-500/20 to-red-500/20 border border-rose-500/30 flex items-center justify-center flex-shrink-0">
-                                <Star className="w-6 h-6 text-rose-400" />
+                        <div className="flex items-center gap-2 md:gap-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-rose-500/20 to-red-500/20 border border-rose-500/30 flex items-center justify-center flex-shrink-0">
+                                <Star className="w-5 h-5 md:w-6 md:h-6 text-rose-400" />
                             </div>
                             <div>
-                                <p className="text-gray-400 text-sm">Rating</p>
-                                <p className="text-white font-semibold text-lg uppercase">{currentItem.maturity_rating || 'Not Rated'}</p>
+                                <p className="text-gray-400 text-xs md:text-sm">Rating</p>
+                                <p className="text-white font-semibold text-sm md:text-lg uppercase">{currentItem.maturity_rating || 'Not Rated'}</p>
                             </div>
                         </div>
 
                         {/* Visibility */}
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
-                                <Globe className="w-6 h-6 text-indigo-400" />
+                        <div className="flex items-center gap-2 md:gap-4">
+                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-indigo-500/20 to-violet-500/20 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
+                                <Globe className="w-5 h-5 md:w-6 md:h-6 text-indigo-400" />
                             </div>
                             <div>
-                                <p className="text-gray-400 text-sm">Visibility</p>
-                                <p className="text-white font-semibold text-lg capitalize">{currentItem.visibility}</p>
+                                <p className="text-gray-400 text-xs md:text-sm">Visibility</p>
+                                <p className="text-white font-semibold text-sm md:text-lg capitalize">{currentItem.visibility}</p>
                             </div>
                         </div>
 
                         {/* Published Date */}
                         {currentItem.published_at && (
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 flex items-center justify-center flex-shrink-0">
-                                    <Calendar className="w-6 h-6 text-teal-400" />
+                            <div className="flex items-center gap-2 md:gap-4">
+                                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-500/30 flex items-center justify-center flex-shrink-0">
+                                    <Calendar className="w-5 h-5 md:w-6 md:h-6 text-teal-400" />
                                 </div>
                                 <div>
-                                    <p className="text-gray-400 text-sm">Published</p>
-                                    <p className="text-white font-semibold text-lg">
+                                    <p className="text-gray-400 text-xs md:text-sm">Published</p>
+                                    <p className="text-white font-semibold text-sm md:text-lg">
                                         {new Date(currentItem.published_at).toLocaleDateString()}
                                     </p>
                                 </div>
@@ -378,7 +378,7 @@ export default function ContentDetailPage() {
                 </div>
 
                 {/* Video Assets Section - Mobile Responsive */}
-                {(currentItem as any).video_assets && (currentItem as any).video_assets.length > 0 && (
+                {/* {(currentItem as any).video_assets && (currentItem as any).video_assets.length > 0 && (
                     <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-xl rounded-2xl p-4 md:p-8 border border-gray-700/50 shadow-2xl">
                         <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
                             <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
@@ -437,7 +437,7 @@ export default function ContentDetailPage() {
                             ))}
                         </div>
                     </div>
-                )}
+                )} */}
 
                 {/* Trailer Section - Mobile Responsive */}
                 {currentItem.trailer_url && (

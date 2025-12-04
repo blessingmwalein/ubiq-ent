@@ -104,7 +104,7 @@ export default function ContentRow({
             {content.map((item, index) => (
               <div
                 key={item.id}
-                className="flex-[0_0_70%] min-w-0 xs:flex-[0_0_60%] sm:flex-[0_0_48%] md:flex-[0_0_32%] lg:flex-[0_0_24%] xl:flex-[0_0_19%]"
+                className="flex-[0_0_38%] min-w-0 xs:flex-[0_0_36%] sm:flex-[0_0_48%] md:flex-[0_0_32%] lg:flex-[0_0_24%] xl:flex-[0_0_19%]"
               >
                 <ContentCard
                   content={item}
