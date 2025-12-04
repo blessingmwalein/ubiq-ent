@@ -82,7 +82,7 @@ export default function ContentCard({
                     src={content.thumbnail}
                     alt={content.title}
                     fill
-                    className="object-cover"
+                    className={isMobile ? "object-cover object-center" : "object-cover"}
                     priority={priority}
                     fallbackText={content.title.charAt(0)}
                     sizes="(max-width: 768px) 40vw, (max-width: 1200px) 33vw, 20vw"
@@ -100,8 +100,12 @@ export default function ContentCard({
 
                 {/* Gradient Overlay - Always visible but more prominent on hover */}
                 <div
-                    className={`absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent transition-all duration-300 ${
-                        isHovered ? 'from-black/95 via-black/60' : 'from-black/70 via-transparent'
+                    className={`absolute inset-0 transition-all duration-300 ${
+                        isMobile 
+                            ? 'bg-gradient-to-t from-black via-black/20 to-transparent' 
+                            : isHovered 
+                                ? 'bg-gradient-to-t from-black/95 via-black/60 to-transparent' 
+                                : 'bg-gradient-to-t from-black/70 via-transparent to-transparent'
                     }`}
                 />
 
@@ -112,7 +116,7 @@ export default function ContentCard({
 
                 {/* Mobile: Show title always, Desktop: Show on hover */}
                 <div
-                    className={`absolute inset-0 p-3 md:p-4 flex flex-col justify-end transition-all duration-300 ${
+                    className={`absolute bottom-0 left-0 right-0 p-3 md:p-4 flex flex-col justify-end transition-all duration-300 ${
                         isMobile || isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                     }`}
                 >

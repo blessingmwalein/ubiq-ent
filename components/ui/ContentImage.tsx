@@ -80,7 +80,7 @@ export default function ContentImage({
     <img
       src={src}
       alt={alt}
-      className={className}
+      className={fill ? `absolute inset-0 w-full h-full ${className}` : className}
       onError={() => setImageError(true)}
       {...props}
     />
