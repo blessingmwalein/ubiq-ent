@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Shield, Lock, Eye, UserCheck, Database, Globe, Sparkles } from "lucide-react"
+import { Shield, Lock, Eye, UserCheck, Database, Globe, Sparkles, Mail, Phone } from "lucide-react"
 
 export default function PrivacyPage() {
   return (
