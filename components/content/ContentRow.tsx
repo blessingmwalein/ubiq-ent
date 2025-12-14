@@ -64,7 +64,7 @@ export default function ContentRow({
   }
 
   return (
-    <div className="relative group/row mb-8 md:mb-12 py-4 md:py-8">
+    <div className="relative group/row">
       {/* Title */}
       <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4 px-4 md:px-8">
         {title}

@@ -141,17 +141,14 @@ export default function BrowsePage() {
 
               {/* Slide Content - Mobile Optimized */}
               <Container className="relative z-20 h-full flex items-end md:items-center pb-20 md:pb-16">
-                <div className="max-w-full md:max-w-2xl space-y-3 md:space-y-6">
-                  {/* Title - Responsive Sizing */}
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-white drop-shadow-2xl leading-tight">
+                <div className="max-w-full md:max-w-2xl lg:max-w-4xl xl:max-w-5xl space-y-3 md:space-y-6">
+                  {/* Title - Responsive Sizing with Max Width */}
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white drop-shadow-2xl leading-tight max-w-full md:max-w-2xl lg:max-w-4xl xl:max-w-5xl">
                     {slide?.title || 'Welcome to UBIQ Entertainment'}
                   </h1>
 
                   {/* Description - Hidden on very small screens */}
-                  <p className="hidden sm:block text-base md:text-lg lg:text-xl text-blue-100 drop-shadow-lg line-clamp-2 md:line-clamp-3">
-                    {slide?.description ||
-                      'Stream unlimited African movies, TV shows, and exclusive content. Watch anywhere, anytime.'}
-                  </p>
+                
 
                   {/* Metadata - Compact on mobile */}
                   {slide && (

@@ -19,7 +19,8 @@ export default function ProfilesPage() {
 
   const handleSelectProfile = (profile: any) => {
     dispatch(selectProfile(profile))
-    router.push('/browse')
+    // router.push('/browse')
+    window.location.href = '/browse'
   }
 
   const handleManageProfiles = () => {
@@ -57,12 +58,11 @@ export default function ProfilesPage() {
                 onClick={() => handleSelectProfile(profile)}
                 className="group flex flex-col items-center space-y-2 sm:space-y-3 md:space-y-4 transition-all"
               >
-                <div 
-                  className={`relative w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-300 ${
-                    isSelected 
-                      ? 'ring-4 ring-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.6)] scale-105' 
+                <div
+                  className={`relative w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-300 ${isSelected
+                      ? 'ring-4 ring-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.6)] scale-105'
                       : 'ring-2 ring-transparent group-hover:ring-white/50 group-hover:scale-105 active:scale-95'
-                  }`}
+                    }`}
                   style={{ background: profile.avatar }}
                 >
                   <div className="w-full h-full flex items-center justify-center">
@@ -76,9 +76,8 @@ export default function ProfilesPage() {
                     </div>
                   )}
                 </div>
-                <span className={`text-sm sm:text-base md:text-lg font-semibold transition-colors text-center ${
-                  isSelected ? 'text-blue-400' : 'text-gray-300 group-hover:text-white'
-                }`}>
+                <span className={`text-sm sm:text-base md:text-lg font-semibold transition-colors text-center ${isSelected ? 'text-blue-400' : 'text-gray-300 group-hover:text-white'
+                  }`}>
                   {profile.name}
                 </span>
               </button>

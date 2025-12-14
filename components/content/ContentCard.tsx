@@ -169,11 +169,11 @@ export default function ContentCard({
                         </h3>
                         
                         {/* Description - Only on hover */}
-                        {content.description && (
+                        {/* {content.description && (
                             <p className="hidden md:block text-xs text-gray-300 line-clamp-2 leading-relaxed">
                                 {content.description}
                             </p>
-                        )}
+                        )} */}
                         
                         <div className="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs text-gray-300 flex-wrap">
                             {content.rating && (
