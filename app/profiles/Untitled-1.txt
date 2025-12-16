@@ -1,0 +1,7 @@
+// Source - https://stackoverflow.com/a
+// Posted by Mizanur Rahman Khan, modified by community. See post 'Timeline' for change history
+// Retrieved 2025-12-13, License - CC BY-SA 4.0
+
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
+});
