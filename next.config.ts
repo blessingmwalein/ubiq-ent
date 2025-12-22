@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     // ignoreBuildErrors: true,
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'http',
@@ -25,7 +26,7 @@ const nextConfig: NextConfig = {
         hostname: 'ubiqent.com',
       },
     ],
-  },
+  }
 };
 
 export default nextConfig;
